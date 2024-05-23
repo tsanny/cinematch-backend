@@ -20,8 +20,8 @@ load_dotenv()
 SECRET_KEY = os.environ.get("SECRET_KEY", False)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-PRODUCTION = os.environ.get("PRODUCTION", False) == "true"
-DEBUG = PRODUCTION
+PRODUCTION = os.environ.get("PRODUCTION", False) == "True"
+DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = []
 
