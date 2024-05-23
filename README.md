@@ -57,6 +57,16 @@
   ```
 - **Repeat**
 
+
+## Deployment to GCR
+- Build the image
+  ```bash
+  $ docker build -t <image_name>
+  $ docker tag <image_name> asia-southeast2-docker.pkg.dev/cinematch-c241-ps352/cinematch-c241-ps352/<image-name-to-be>
+  $ docker push asia-southeast2-docker.pkg.dev/cinematch-c241-ps352/cinematch-c241-ps352/<image-name-to-be>
+  ```
+
+
 # API Documentation
 
 ## Acknowledgements

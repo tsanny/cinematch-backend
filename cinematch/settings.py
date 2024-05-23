@@ -23,8 +23,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY", False)
 PRODUCTION = os.environ.get("PRODUCTION", False) == "True"
 DEBUG = not PRODUCTION
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "cinematch-image-oothcchs6a-et.a.run.app"]
 
+CSRF_TRUSTED_ORIGINS = ["cinematch-image-oothcchs6a-et.a.run.app"]
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 
@@ -161,7 +164,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+# STATIC_URL = "static/"
+
+#static file with gcloud storage
+STATIC_URL = 'https://storage.googleapis.com/cinematch-c241-ps352/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
