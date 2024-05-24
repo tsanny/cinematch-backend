@@ -27,11 +27,15 @@ SECRET_KEY = os.environ.get("SECRET_KEY", False)
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = os.environ.get("PRODUCTION", False) == "True"
 DEBUG = not PRODUCTION
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", FRONTEND_URL]
+
+CSRF_TRUSTED_ORIGINS = [FRONTEND_URL]
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -175,10 +179,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+<<<<<<< HEAD
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATICFILES_DIRS = []
+=======
+# STATIC_URL = "static/"
+
+#static file with gcloud storage
+STATIC_URL = 'https://storage.googleapis.com/cinematch-c241-ps352/'
+>>>>>>> deployment
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
