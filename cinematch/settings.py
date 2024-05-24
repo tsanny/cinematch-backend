@@ -27,11 +27,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY", False)
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = os.environ.get("PRODUCTION", False) == "True"
 DEBUG = not PRODUCTION
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "")
+APP_URL = os.environ.get("APP_URL", "")
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", FRONTEND_URL]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", APP_URL]
 
-CSRF_TRUSTED_ORIGINS = [FRONTEND_URL]
+CSRF_TRUSTED_ORIGINS = [APP_URL]
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
