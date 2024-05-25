@@ -10,27 +10,32 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
 
+# Load .env variables
 load_dotenv()
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", False)
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = os.environ.get("PRODUCTION", False) == "True"
 DEBUG = not PRODUCTION
+APP_URL = os.environ.get("APP_URL", "")
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "cinematch-image-oothcchs6a-et.a.run.app"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", APP_URL]
 
-CSRF_TRUSTED_ORIGINS = ["cinematch-image-oothcchs6a-et.a.run.app"]
-SECURE_SSL_REDIRECT = True
+CSRF_TRUSTED_ORIGINS = [APP_URL]
+SECURE_SSL_REDIRECT = PRODUCTION
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -124,16 +129,26 @@ WSGI_APPLICATION = "cinematch.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("PGDATABASE"),
-        "USER": os.environ.get("PGUSER"),
-        "PASSWORD": os.environ.get("PGPASSWORD"),
-        "HOST": os.environ.get("PGHOST"),
-        "PORT": os.environ.get("PGPORT"),
+if PRODUCTION:
+    DATABASES = {
+        'default': {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("PGDATABASE"),
+            "USER": os.environ.get("PGUSER"),
+            "PASSWORD": os.environ.get("PGPASSWORD"),
+            "HOST": os.environ.get("PGHOST"),
+            "PORT": os.environ.get("PGPORT"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
+
+
 
 
 # Password validation
@@ -163,8 +178,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-# STATIC_URL = "static/"
 
 #static file with gcloud storage
 STATIC_URL = 'https://storage.googleapis.com/cinematch-c241-ps352/'
